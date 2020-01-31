@@ -91,15 +91,15 @@ class ModeAccueil extends Mode{
     
     fill(255,255,255);
     text("Menu principal",this.afficheur.x(10),this.afficheur.y(60));
-    text("Page: "+this.pages.get(index).name,this.afficheur.x(20),this.afficheur.y(80));
+    text("Page: "+this.pages.get(index).name,this.afficheur.x(20),this.afficheur.y(110));
     //text(this.getLogo(),this.afficheur.x(40),this.afficheur.y(100));
     
-    text(this.pages.get(index).message,this.afficheur.x(20),this.afficheur.y(120));
+    text(this.pages.get(index).message,this.afficheur.x(20),this.afficheur.y(150));
     text(this.pages.get(index).footer,this.afficheur.x(180),this.afficheur.maxY()-50);
   }
   
   private String getMessageAccueil(){
-    String chaine = "Vous voici dans le menu principal de la GB \n\n";
+    String chaine = "";
     chaine += "Vous pouvez naviguez dans les modes avec les touches ↑ et ↓\n";
     chaine += "Vous pouvez valider votre choix en appuyant sur A\n";
     chaine += "Vous pouvez a tout moment revenir en arrière avec le boutton B\n\n";
@@ -108,7 +108,7 @@ class ModeAccueil extends Mode{
   }
   
   private String getMessageJeux(){
-    String chaine = "Voici le mode jeu de la GB \n\n";
+    String chaine = "";
     chaine += "Appuyez sur A pour choisir ce mode \n";
     chaine += "Le système est censé supporter plusieurs jeux \n";
     chaine += "Vous pouvez a tout moment revenir en arrière avec le boutton B\n\n";
@@ -116,7 +116,7 @@ class ModeAccueil extends Mode{
   }
   
   private String getMessageParams(){
-    String chaine = "Voici le mode parametres de la GB \n\n";
+    String chaine = "";
     chaine += "Appuyez sur A pour choisir ce mode \n";
     chaine += "Vous pourrez y parametrer la console \n";
     chaine += "Vous pouvez a tout moment revenir en arrière avec le boutton B\n\n";

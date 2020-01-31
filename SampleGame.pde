@@ -38,14 +38,15 @@ class SampleGame extends Jeu{
       
       
       this.buttons = new ArrayList<CanvasButton>();
-      this.buttons.add(new CanvasButton( "x+",this.afficheur.x(20),this.afficheur.y(20),25,25,true));
-      this.buttons.add(new CanvasButton( "x-",this.afficheur.x(60),this.afficheur.y(20),25,25,true));
+      int btnSize = (int)(height*0.03);
+      this.buttons.add(new CanvasButton( "x+",this.afficheur.x(40),this.afficheur.y(20),btnSize, btnSize, true));
+      this.buttons.add(new CanvasButton( "x-",this.afficheur.x(120),this.afficheur.y(20),btnSize, btnSize, true));
       
-      this.buttons.add(new CanvasButton( "y+",this.afficheur.x(20),this.afficheur.y(60),25,25,true));
-      this.buttons.add(new CanvasButton( "y-",this.afficheur.x(60),this.afficheur.y(60),25,25,true));
+      this.buttons.add(new CanvasButton( "y+",this.afficheur.x(40),this.afficheur.y(100), btnSize, btnSize, true));
+      this.buttons.add(new CanvasButton( "y-",this.afficheur.x(120),this.afficheur.y(100), btnSize, btnSize, true));
       
-      this.buttons.add(new CanvasButton( "z+",this.afficheur.x(20),this.afficheur.y(100),25,25,true));
-      this.buttons.add(new CanvasButton( "z-",this.afficheur.x(60),this.afficheur.y(100),25,25,true));
+      this.buttons.add(new CanvasButton( "z+",this.afficheur.x(40),this.afficheur.y(180), btnSize, btnSize, true));
+      this.buttons.add(new CanvasButton( "z-",this.afficheur.x(120),this.afficheur.y(180), btnSize, btnSize, true));
       
       this.memoireButton = "None";
       
@@ -157,13 +158,16 @@ class SampleGame extends Jeu{
       public int z;
       public float rotationX;
       public float rotationY;
+      public int speed;
       
       public BoxGame(){
-        this.x = 240;
-        this.y = 240;
+        this.x = (int)(width/2);
+        this.y = (int)(height/3);
         this.z = 50;
         this.rotationX = 0.0;
         this.rotationY = 0.0;
+        
+        this.speed = 4;
       }
       public BoxGame(BoxGame oth){
         this.x = oth.x;
@@ -175,22 +179,22 @@ class SampleGame extends Jeu{
       
       public void longEvent(String button){
         if(button == "x+"){
-          this.x += 1;
+          this.x += this.speed;
         }
         else if(button == "x-"){
-          this.x -= 1;
+          this.x -= this.speed;
         }
         else if(button == "y+"){
-          this.y -= 1;
+          this.y -= this.speed;
         }
         else if(button == "y-"){
-          this.y += 1;
+          this.y += this.speed;
         }
         else if(button == "z+"){
-          this.z -= 1;
+          this.z -= this.speed;
         }
         else if(button == "z-"){
-          this.z += 1;
+          this.z += this.speed;
         }
       }
       

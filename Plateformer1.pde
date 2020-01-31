@@ -179,7 +179,7 @@ class Plateformer extends Jeu{
       public void update(){
         this.vitesse += 0.01;
         this.y += vitesse;
-        if(this.y > 440){
+        if(this.y > this.afficheur.maxY()){
           this.raz();
         }
       }

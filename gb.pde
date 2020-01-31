@@ -1,5 +1,17 @@
 import java.util.*;
 
+class ScreenCoords{
+  public int left, top, w, h;
+  
+  public ScreenCoords(int marginWidth, int marginHeight, int w, int h) {
+    this.left = marginWidth;
+    this.top = marginHeight;
+    this.w = w;
+    this.h = h;
+  }
+}
+
+
 
 class GB{
   private Afficheur afficheur;
@@ -7,39 +19,90 @@ class GB{
   private ModeGest modes;
   private ArrayList <CanvasButton> buttons;
   
-  public GB(){
-    this.theme = new Theme("Gameboy.png");
-    this.afficheur = new Afficheur(30,45,410,410);
+  public GB(ScreenCoords sc){
+    this.theme = new Theme("Gameboy.png", sc);
+    
+    this.afficheur = new Afficheur(
+      (int)(sc.left + (sc.w * 0.1)), 
+      (int)(sc.top + (sc.h * 0.1)), 
+      (int)(sc.h / 2.35), 
+      (int)(sc.h / 2.35)
+    );
+    
     //this.mode = new ModeAccueil("Menu principal",afficheur);
     this.modes = new ModeGest(afficheur);
     
     this.buttons = new ArrayList<CanvasButton>() ;
     
-    this.buttons.add(new CanvasButton( "←",40,568,50,52,false));
-    this.buttons.add(new CanvasButton( "→", 140,568,50,52,false));
-    this.buttons.add(new CanvasButton( "↑", 90,518,50,50,false));
-    this.buttons.add(new CanvasButton( "↓", 90,620,50,50,false));
+    int btnSize = (int)(sc.w * 0.12);
+    this.buttons.add(new CanvasButton( "←", 
+      (int)(sc.left + (sc.w * 0.07)),  
+      (int)(sc.top + (sc.h * 0.71)),  
+      btnSize, btnSize, false));
+      
+    this.buttons.add(new CanvasButton( "→", 
+      (int)(sc.left + (sc.w * 0.29)),  
+      (int)(sc.top + (sc.h * 0.71)),   
+      btnSize, btnSize, false));
+      
+    this.buttons.add(new CanvasButton( "↑", 
+      (int)(sc.left + (sc.w * 0.18)),  
+      (int)(sc.top + (sc.h * 0.65)),  
+      btnSize, btnSize, false));
+      
+    this.buttons.add(new CanvasButton( "↓", 
+      (int)(sc.left + (sc.w * 0.18)),  
+      (int)(sc.top + (sc.h * 0.77)),  
+      btnSize, btnSize, false));
     
-    this.buttons.add(new CanvasButton( "B", 309,567,55,55,false));
-    this.buttons.add(new CanvasButton( "A", 388,532,55,55,false));
+    this.buttons.add(new CanvasButton( "B", 
+      (int)(sc.left + (sc.w * 0.645)),  
+      (int)(sc.top + (sc.h * 0.71)),  
+      btnSize, btnSize, false));
+      
+    this.buttons.add(new CanvasButton( "A", 
+      (int)(sc.left + (sc.w * 0.81)),  
+      (int)(sc.top + (sc.h * 0.665)),  
+      btnSize, btnSize, false));
     
-    this.buttons.add(new CanvasButton( "clearLog", 290,770,20,20,true));
-    this.buttons.add(new CanvasButton( "affColor", 410,770,20,20,true));
-    this.buttons.add(new CanvasButton( "btnColor", 450,770,20,20,true));
+    int ssBtnSize = (int)(sc.w * 0.15);
+    this.buttons.add(new CanvasButton( "select", 
+      (int)(sc.left + (sc.w * 0.34)),  
+      (int)(sc.top + (sc.h * 0.86)),
+      ssBtnSize, ssBtnSize, false));
+      
+    this.buttons.add(new CanvasButton( "start", 
+      (int)(sc.left + (sc.w * 0.5)),  
+      (int)(sc.top + (sc.h * 0.86)),
+      ssBtnSize, ssBtnSize, false));
     
-    this.buttons.add(new CanvasButton( "select", 162,695,65,55,false));
-    this.buttons.add(new CanvasButton( "start", 240,695,65,55,false));
+    
+    int optBtnSize = (int)(sc.w * 0.05);
+    int optBtnZ = (int)(sc.top + (sc.h * 0.95));
+    this.buttons.add(new CanvasButton( "clearLog", 
+      (int)(sc.left + (sc.w * 0.7)),  
+      optBtnZ, 
+      optBtnSize, optBtnSize, true));
+    this.buttons.add(new CanvasButton( "affColor", 
+      (int)(sc.left + (sc.w * 0.8)),  
+      optBtnZ, 
+      optBtnSize, optBtnSize, true));
+    this.buttons.add(new CanvasButton( "btnColor", 
+      (int)(sc.left + (sc.w * 0.9)),  
+      optBtnZ, 
+      optBtnSize, optBtnSize, true));
   }
   
   public void show(){
       this.theme.show();
-  //afficheur.show();
+      
       try{
         this.modes.show();
       } 
       catch(Exception e) {
         Debugger.disp("modegest.show()  : "+e.toString());
       }
+      
       //Affichage bouttons
       Iterator<CanvasButton> it = this.buttons.iterator() ;
       CanvasButton ite;
@@ -47,7 +110,6 @@ class GB{
         ite = it.next();
         ite.show();
       }
-      
       
       this.showDebugger();
   }
@@ -104,8 +166,18 @@ class GB{
 
 GB gb;
 void setup() {
-  size(480,800,P3D);
-  gb = new GB();
+  // size(480,800,P3D);
+  fullScreen(P3D);
+  textSize((int)(height*0.012));
+  
+  int marginWidth = (int)(0.025*width);
+  int w = (int)(width - 2*marginWidth) ;
+    
+  int h = (int)(width / (9.0f/16));
+  int marginHeight = (int)((height-h)/2);
+  
+  ScreenCoords sc = new ScreenCoords(marginWidth, marginHeight, w, h);
+  gb = new GB(sc);
 }
 
 void draw() {
